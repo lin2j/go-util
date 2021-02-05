@@ -46,3 +46,21 @@ func TestRandomNumbers(t *testing.T) {
 		fmt.Println(RandomNumbers(5))
 	}
 }
+
+func TestRandomPhone(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(RandomPhone())
+	}
+}
+
+func TestRandomEmail(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		fmt.Println(RandomEmail())
+	}
+}
+
+func TestRandomChineseName(t *testing.T) {
+	for i := 0; i < 20; i++ {
+		fmt.Println(RandomChineseName())
+	}
+}

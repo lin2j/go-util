@@ -12,7 +12,7 @@ var (
 	BaseCharNumber = BaseChar + BaseNumber
 )
 
-// RandomInt returns a random integer in [min, max)
+// RandomInt 产生一个在 [min, max) 的随机数
 func RandomInt(min, max int) int {
 	if max < min {
 		panic(errors.New(fmt.Sprintf("min must be less than or equal max, min is %d, max is %d", min, max)))
@@ -20,22 +20,22 @@ func RandomInt(min, max int) int {
 	return min + rand.Intn(max-min)
 }
 
-// RandomIntN returns a random integer in [0. limit)
+// RandomIntN 产生一个在 [0. limit) 的随机整数
 func RandomIntN(limit int) int {
 	return RandomInt(0, limit)
 }
 
-//  RandomBool returns random bool
+//  RandomBool 返回随机布尔值
 func RandomBool() bool {
 	return RandomIntN(2) == 0
 }
 
-// RandomStringN returns string which length is len
-func RandomStringN(len int) string {
-	return RandomStringBase(BaseCharNumber, len)
+// RandomStringN 产生长度为 n 的随机字符串，n 需要大于 0
+func RandomStringN(n int) string {
+	return RandomStringBase(BaseCharNumber, n)
 }
 
-// RandomStringBase returns string which content base on baseStr argument
+// RandomStringBase 以 baseStr 参数的内容为基础，拼接处长度为 length 的字符串
 func RandomStringBase(baseStr string, length int) string {
 	if length < 0 {
 		panic(errors.New("len must not be negative"))
@@ -48,7 +48,43 @@ func RandomStringBase(baseStr string, length int) string {
 	return result
 }
 
-// RandomNumbers returns a number string
+// RandomNumbers 返回一个随机字符串
 func RandomNumbers(length int) string {
 	return RandomStringBase(BaseNumber, length)
+}
+
+// RandomPhone 返回一个随机手机号
+func RandomPhone() string {
+	return TelHead[RandomIntN(len(TelHead))] + RandomNumbers(8)
+}
+
+// RandomEmail 返回一个随机邮箱
+func RandomEmail() string {
+	return RandomNumbers(8) + EmailSuffix[RandomIntN(len(EmailSuffix))]
+}
+
+// RandomChineseName 返回一个随机性别，随机长度的姓名
+func RandomChineseName() string {
+	// 是否为男性姓名
+	male := RandomBool()
+	// 姓名长度，一个字或者两个字（复姓算一个长度）
+	nameLen := RandomInt(2, 4)
+	return RandomChineseNameBool(male, nameLen)
+}
+
+// RandomChineseNameBool 返回指定长度、指定性别的名字
+func RandomChineseNameBool(male bool, nameLen int) string {
+	var nameStr string
+	if male {
+		nameStr = MaleName
+	} else {
+		nameStr = FemaleName
+	}
+	runes := []rune(nameStr)
+	n := len(runes)
+	firstName := FirstName[RandomIntN(len(FirstName))]
+	for i := 0; i < nameLen; i++ {
+		firstName += string(runes[RandomIntN(n)])
+	}
+	return firstName
 }
