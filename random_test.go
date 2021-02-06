@@ -64,3 +64,10 @@ func TestRandomChineseName(t *testing.T) {
 		fmt.Println(RandomChineseName())
 	}
 }
+
+func TestRandomDateTime(t *testing.T) {
+	for i := 0; i < 10; i++ {
+		t, _ := RandomDateTime(0, 20)
+		fmt.Println(t.Format(NormDateTimePattern))
+	}
+}

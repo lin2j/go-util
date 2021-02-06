@@ -4,6 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"math/rand"
+	"time"
 )
 
 var (
@@ -87,4 +88,18 @@ func RandomChineseNameBool(male bool, nameLen int) string {
 		firstName += string(runes[RandomIntN(n)])
 	}
 	return firstName
+}
+
+// RandomDateTime 以当天为基准，随机产生一个日期
+func RandomDateTime(min, max int) (time.Time, error) {
+	return RandomDateTimeBase(time.Now(), DayField, min, max)
+}
+
+// RandomDateTimeBase 以 baseTime 为基准，对指定的时间字段进行偏移，产生一个随机时间
+func RandomDateTimeBase(baseTime time.Time, field int, min, max int) (time.Time, error) {
+	if t, err := OffsetTime(baseTime, field, RandomInt(min, max)); err != nil {
+		return time.Time{}, err
+	} else {
+		return t, nil
+	}
 }

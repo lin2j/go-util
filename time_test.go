@@ -24,12 +24,25 @@ func TestFormat(t *testing.T) {
 
 func TestTimeOp(t *testing.T) {
 	now := time.Now()
-	offset := OffsetDays(&now, -3)
-	hour := OffsetHours(&now, 96)
+	offset := OffsetDays(now, -3)
+	hour := OffsetHours(now, 96)
 
 	fmt.Println(fmt.Sprintf("%-30s", PureHourPattern), now.Format(PureHourPattern))
 	fmt.Println(fmt.Sprintf("%-30s", PureHourPattern), offset.Format(PureHourPattern))
 	fmt.Println(fmt.Sprintf("%-30s", PureHourPattern), hour.Format(PureHourPattern))
+
+	newT, _ := OffsetTime(now, YearField, 1)
+	fmt.Println(fmt.Sprintf("%-30s", NormDateTimePattern), newT.Format(NormDateTimePattern))
+	newT, _ = OffsetTime(now, MonthField, 1)
+	fmt.Println(fmt.Sprintf("%-30s", NormDateTimePattern), newT.Format(NormDateTimePattern))
+	newT, _ = OffsetTime(now, DayField, 1)
+	fmt.Println(fmt.Sprintf("%-30s", NormDateTimePattern), newT.Format(NormDateTimePattern))
+	newT, _ = OffsetTime(now, HourField, 1)
+	fmt.Println(fmt.Sprintf("%-30s", NormDateTimePattern), newT.Format(NormDateTimePattern))
+	newT, _ = OffsetTime(now, MinuteField, 1)
+	fmt.Println(fmt.Sprintf("%-30s", NormDateTimePattern), newT.Format(NormDateTimePattern))
+	newT, _ = OffsetTime(now, SecondField, 1)
+	fmt.Println(fmt.Sprintf("%-30s", NormDateTimePattern), newT.Format(NormDateTimePattern))
 }
 
 func TestToday(t *testing.T) {
